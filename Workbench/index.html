@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>JavaScript Workbench</title>
+	<style>
+
+		body {
+
+		}
+	
+		textarea {
+			width: 300px;
+			height: 200px;
+		}
+
+	</style>
+</head>
+<body>
+
+	<p>Enter some code below:</p>
+	<textarea id="code">return "hi";</textarea>
+	<button id="button">Run</button>
+	
+	<p>Result:</p>
+	<pre id="output"></pre>
+
+	<script type="text/javascript">
+		
+		var code = document.getElementById('code');
+		var button = document.getElementById('button');
+		var output = document.getElementById('output');
+
+		button.addEventListener('click',function(event){
+
+			try {
+				
+				var foo = new Function(code.value);
+				var result = foo();
+
+			} catch(error){
+
+				result = error.message;
+
+			} finally {
+
+				output.textContent = result;
+			
+			}
+
+		});
+
+	</script>
+
+</body>
+</html>

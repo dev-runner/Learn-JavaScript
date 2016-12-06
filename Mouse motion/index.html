@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Mouse motion example</title>
+	<meta charset="utf-8">
+	<style>
+		
+		* {
+			padding: 0;
+			margin: 0;
+		}
+
+		body {
+			font-family: Helvetica, sans-serif;
+			font-size: 20px;
+			background: beige;
+		}
+
+		div {
+			background: orange;
+			width: 100px;
+			height: 50px;
+			margin-top: 20px;
+		}
+
+	</style>
+</head>
+<body>
+	
+	<p>Drag the bar to change its width:</p>
+	<div id="dragMe"></div>
+
+	<script type="text/javascript">
+
+		(function(){
+
+			var lastX; // tracks the last mouse position
+			var rect = document.querySelector('#dragMe'); // div element
+
+			// listen for mouse clicks
+			rect.addEventListener('mousedown', function(event){
+				if(event.which == 1){
+					lastX = event.pageX;
+					addEventListener('mousemove', moved);
+					event.preventDefault();
+				}
+			});
+
+			// check if mouse button is pressed
+			function buttonPressed(event){
+				if (event.buttons == null)
+					return event.which != 0;
+				else
+					return event.buttons != 0;
+			}
+
+			// drag the mouse and resize the box
+			function moved(event){
+				if (!buttonPressed(event)) {
+					removeEventListener("mousemove", moved);
+				} else {
+					var dist = event.pageX - lastX;
+					var newWidth = Math.max(10, rect.offsetWidth + dist);
+					rect.style.width = newWidth + "px";
+					lastX = event.pageX;
+				}
+			}
+
+		})();
+
+	</script>
+</body>
+</html>

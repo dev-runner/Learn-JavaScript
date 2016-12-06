@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Dots</title>
+	<meta charset="utf-8">
+	<style type="text/css">
+		
+		* {
+			padding: 0;
+			margin: 0;
+		}
+
+		body {
+			background: beige;
+			font-family: Halvetica, sans-serif;
+			font-size: 17px;
+			padding: 20px;
+		}
+	
+		.dot {
+			height: 20px;
+			width: 20px;
+			border-radius: 10px;
+			position: absolute;
+			background: #cc0000;
+		}
+
+	</style>
+</head>
+<body>
+	<h1>Double click to add a dot. Single-click on a dot to remove it.</h1>
+	<script type="text/javascript">
+	
+		(function(){
+
+			// insert a dot when clicked
+			addEventListener('dblclick', function(event){
+				
+				var dot = document.createElement('div');
+				dot.className = 'dot';
+				dot.style.left = (event.pageX - 10) + 'px';
+				dot.style.top = (event.pageY - 10) + 'px';
+
+				// add click listener to remove the dot
+				dot.addEventListener('click', function(event){
+					this.parentNode.removeChild(this);
+					event.stopPropagation();
+				});
+
+				document.body.appendChild(dot);
+			});
+
+		})();
+
+	</script>
+</body>
+</html>

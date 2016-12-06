@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Autocompletion in JavaScript</title>
+</head>
+<body>
+
+	Type something: <input type="text" id="field">
+	<div id="suggestions" style="cursor: pointer"></div>
+
+	<script type="text/javascript">
+		
+		// Builds up an array with global variable names, like
+		// 'alert', 'document', and 'scrollTo'
+		var terms = [];
+		for (var name in window){
+			terms.push(name);	
+		}
+		
+		var input = document.querySelector("#field");
+		var suggestions = document.querySelector("#suggestions");
+
+		input.addEventListener('input', function(event){
+
+			// first, remove the old suggestions, if any
+			while(suggestions.firstChild){
+				suggestions.removeChild(suggestions.firstChild);
+			}
+
+			if(event.target.value === '') return;
+
+			// filter out the matching elements
+			var matching = terms.filter(function(element){
+				return element.startsWith(event.target.value);
+			});
+
+			// build the suggestions list
+			matching.forEach(function(element){
+				
+				var suggestion = document.createElement('div');
+				var txt = document.createTextNode(element);
+				suggestion.appendChild(txt);
+
+				suggestion.addEventListener('click', function(event){
+					input.value = event.target.textContent;
+				});
+
+				suggestions.appendChild(suggestion);
+
+			});
+
+		});
+
+	</script>
+
+</body>
+</html>
